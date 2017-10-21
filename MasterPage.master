@@ -37,6 +37,8 @@
                 <div class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">
                         <li><a href="Default.aspx">Home</a></li>
+                        <li><a href="Summary.aspx">Summary</a></li>
+                        <li><a href="Inventory.aspx">Inventory</a></li>
                     </ul>
                 </div>
             </div>
