@@ -51,7 +51,8 @@
             </div>
             <asp:RegularExpressionValidator ValidationExpression="[0-9]+([.][0-9]+)?" ControlToValidate="Cost" runat="server" ErrorMessage="Invalid cost format!"></asp:RegularExpressionValidator>
         </div>
-        <asp:Button runat="server" OnClick="Add_Medicine" Text="Add Medicine" CssClass="btn btn-md btn-default"/>
+        <asp:Button runat="server" OnClick="Add_Medicine" Text="Add Medicine" CssClass="btn btn-md btn-default col-sm-offset-2"/>
+        <asp:Button runat="server" OnClick="Reset_Form" Text="Reset Form" CssClass="btn btn-md btn-warning"/>
         <asp:Label runat="server" ID="Result"></asp:Label>
     </div>
 </asp:Content>
