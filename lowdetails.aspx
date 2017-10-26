@@ -13,6 +13,9 @@
 
     <asp:DetailsView runat="server" DataSourceID="medven" ID="dv"></asp:DetailsView>
 
+    <br />
+    <asp:Label ID="rdr" runat="server"></asp:Label>
+
     <asp:Button Text="Reorder" CssClass="btn btn-md btn-primary" runat="server" OnClick="Order_Med"/>
     <div class="col-sm-12" style="text-align:center">
         <asp:Label runat="server" Font-Size="18" ID="lbl"></asp:Label>
