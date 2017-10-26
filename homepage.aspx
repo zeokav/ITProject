@@ -45,7 +45,16 @@
             </asp:GridView>
         </div>
         <div class="col-md-4">
-            <h3>The other thing</h3>
+            <h3>Vendor-wise Expired Medicines</h3>
+            <asp:Button Text="Show/Hide" OnClick="Show_Vend" runat="server"/><br /><br />
+            <asp:GridView ID="vend_gv" runat="server" AllowSorting="true" Visible="false" AutoGenerateColumns="false">
+                <RowStyle BackColor="#ccffff"/>
+                <HeaderStyle Font-Italic="true" Font-Bold="true"/>
+                <Columns>
+                    <asp:BoundField HeaderText="Item Name" DataField="Key"/>
+                    <asp:BoundField HeaderText="Medicine Vendor" DataField="Value" />
+                </Columns>
+            </asp:GridView>
         </div>
     </div>
 </asp:Content>

@@ -17,7 +17,51 @@ public partial class homepage : System.Web.UI.Page
                             
             SetReq();
             SetExp();
+            SetVend();
             SetRevenue();
+        }
+    }
+
+    protected void SetVend()
+    {
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
+        try
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("Select distinct BatchInfo.Med_ID from BatchInfo INNER JOIN MedicineMaster ON BatchInfo.Med_ID=MedicineMaster.Med_ID WHERE BatchInfo.Expiry_Date < @tod", con);
+            cmd.Parameters.AddWithValue("@tod", DateTime.Today);
+            SqlDataReader reader = cmd.ExecuteReader();
+            List<string> meds = new List<string>();
+            while (reader.Read())
+            {
+                meds.Add(reader["Med_ID"].ToString());
+            }
+            reader.Close();
+
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            foreach(string med in meds)
+            {
+                cmd = new SqlCommand("Select MedicineMaster.Trade_Name, Vendor.Vendor_Name from MedicineMaster INNER JOIN Vendor ON MedicineMaster.Vendor_ID=Vendor.Vendor_ID where MedicineMaster.Med_ID=@med", con);
+                cmd.Parameters.AddWithValue("@med", med);
+
+                reader = cmd.ExecuteReader();
+                while(reader.Read())
+                {
+                    dict[reader["Trade_Name"].ToString()] = reader["Vendor_Name"].ToString();
+                }
+                reader.Close();
+            }
+
+            vend_gv.DataSource = dict;
+            vend_gv.DataBind();
+        }
+        catch (Exception ec)
+        {
+            errmsg.Text = ec.ToString();
+        }
+        finally
+        {
+            con.Close();
         }
     }
 
@@ -161,6 +205,11 @@ public partial class homepage : System.Web.UI.Page
     protected void Show_Exp(object sender, EventArgs e)
     {
         this.exp_gv.Visible = !this.exp_gv.Visible;
+    }
+
+    protected void Show_Vend(object sender, EventArgs e)
+    {
+        this.vend_gv.Visible = !this.vend_gv.Visible;
     }
 
     protected void req_gv_RowCommand(object sender, GridViewCommandEventArgs e)
