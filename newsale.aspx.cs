@@ -14,7 +14,7 @@ public partial class newsale : System.Web.UI.Page
     
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (!IsPostBack)d
         {
             List<String> list = new List<String>();
             SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
@@ -81,6 +81,8 @@ public partial class newsale : System.Web.UI.Page
 
         }
         DropDownList tb = new DropDownList();
+        tb.DataSource = (List<String>)Session["list"];
+        DataBind();
         TextBox tbquantity = new TextBox();
         TableRow row = new TableRow();
         TableCell c1 = new TableCell();
