@@ -92,7 +92,7 @@ public partial class newsale : System.Web.UI.Page
         SqlCommand cmd = new SqlCommand("INSERT INTO MedicineMaster VALUES(@SaleId, @PurDate)", con);
         String mon = RandomDigits(9);
         cmd.Parameters.AddWithValue("@SaleId",mon);
-        cmd.Parameters.AddWithValue("@SaleId",DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+        cmd.Parameters.AddWithValue("@PurDate", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
         cmd.ExecuteNonQuery();
         foreach (TableRow row in medsale.Rows)
         {
