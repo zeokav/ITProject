@@ -17,7 +17,72 @@ public partial class homepage : System.Web.UI.Page
                             
             SetReq();
             SetExp();
-   
+            SetRevenue();
+        }
+    }
+
+    protected void SetRevenue()
+    {
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
+        try
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("Select Sales_ID from Sales Where Purchase_Date = @tod", con);
+            cmd.Parameters.AddWithValue("@tod", DateTime.Today);
+            SqlDataReader reader = cmd.ExecuteReader();
+            List<string> s_ids = new List<string>();
+
+            while(reader.Read())
+            {
+                s_ids.Add(reader["Sales_ID"].ToString());
+            }
+            reader.Close();
+            Dictionary<string, int> sales = new Dictionary<string, int>();
+
+            foreach (string id in s_ids)
+            {
+                cmd = new SqlCommand("Select * from SalesInfo WHERE Sales_ID = @id", con);
+                cmd.Parameters.AddWithValue("@id", id);
+                reader = cmd.ExecuteReader();
+
+                while(reader.Read())
+                {
+                    try
+                    {
+                        sales[reader["Med_ID"].ToString()] += int.Parse(reader["Quantity"].ToString());
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        sales[reader["Med_ID"].ToString()] = int.Parse(reader["Quantity"].ToString());
+                    }
+                }
+                reader.Close();
+            }
+
+            int cnt = 0;
+            foreach (KeyValuePair<string, int> entry in sales)
+            {
+                cnt++;
+                cmd = new SqlCommand("Select * from MedicineMaster where Med_ID = @med", con);
+                cmd.Parameters.AddWithValue("@med", entry.Key);
+                reader = cmd.ExecuteReader();
+                reader.Read();
+                float cost = float.Parse(reader["Med_Price"].ToString());
+                rev.Text += "Medicine: " + reader["Trade_Name"] + ", Quantity: " + entry.Value + ", <strong>Earnings: " + (cost*entry.Value).ToString() + " </strong><br />";
+                reader.Close();
+            }
+            if(cnt == 0)
+            {
+                rev.Text = "No purchases today!";
+            }
+        }
+        catch (Exception exc)
+        {
+            errmsg.Text = exc.ToString();
+        }
+        finally
+        {
+            con.Close();
         }
     }
 
