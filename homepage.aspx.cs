@@ -14,52 +14,78 @@ public partial class homepage : System.Web.UI.Page
     {
         if(!IsPostBack)
         {
-            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
-            try
-            {
-                con.Open();
-                SetReq(con);
-                SetExp(con);
-            }
-            catch(Exception exc)
-            {
-                errmsg.Text = "There was an error: " + exc.ToString();
-            }
-            finally
-            {
-                con.Close();
-            }
+                            
+            SetReq();
+            SetExp();
+   
         }
     }
 
-    protected void SetReq(SqlConnection con)
+    protected void SetReq()
     {
-        SqlCommand cmd = new SqlCommand("Select Inventory.Med_ID, MedicineMaster.Trade_Name, Inventory.Med_Remaining, Inventory.Med_Threshold from MedicineMaster INNER JOIN Inventory on MedicineMaster.Med_ID=Inventory.Med_ID WHERE Inventory.Med_Remaining<Inventory.Med_Threshold", con);
-        SqlDataReader reader = cmd.ExecuteReader();
-        int cnt = 0;
-        while (reader.Read())
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
+        try
         {
-            cnt++;
-        }
-        if (reader.HasRows)
-        {
-            ReqStatus.Text = cnt.ToString() + " medicines need to be ordered.";
-        }
-        else
-        {
-            ReqStatus.Text = "Medicines are all stocked up!";
-        }
-        reader.Close();
+            con.Open();
+            SqlCommand cmd = new SqlCommand("Select Inventory.Med_ID, MedicineMaster.Trade_Name, Inventory.Med_Remaining, Inventory.Med_Threshold from MedicineMaster INNER JOIN Inventory on MedicineMaster.Med_ID=Inventory.Med_ID WHERE Inventory.Med_Remaining<Inventory.Med_Threshold", con);
+            SqlDataReader reader = cmd.ExecuteReader();
 
-        reader = cmd.ExecuteReader();
-        req_gv.DataSource = reader;
-        this.DataBind();
+            req_gv.DataSource = reader;
+            req_gv.DataBind();
 
+            int cnt = req_gv.DataKeys.Count;
+            if (cnt > 0)
+            {
+                ReqStatus.Text = cnt.ToString() + " medicines need to be ordered.";
+            }
+            else
+            {
+                ReqStatus.Text = "Medicines are all stocked up!";
+            }
+
+        }
+        catch (Exception ec)
+        {
+            errmsg.Text = ec.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+        
     }
 
-    protected void SetExp(SqlConnection con)
+    protected void SetExp()
     {
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
+        try
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("Select * from BatchInfo WHERE Expiry_Date < @tod", con);
+            cmd.Parameters.AddWithValue("@tod", DateTime.Now);
+            SqlDataReader reader = cmd.ExecuteReader();
 
+            exp_gv.DataSource = reader;
+            exp_gv.DataBind();
+
+            int cnt = exp_gv.DataKeys.Count;
+            if (cnt > 0)
+            {
+                ExpStatus.Text = cnt.ToString() + " medicines expired.";
+            }
+            else
+            {
+                ExpStatus.Text = "No medicines expired!";
+            }
+        }
+        catch (Exception ec)
+        {
+            errmsg.Text = ec.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
     }
 
     protected void Show_Req(object sender, EventArgs e)

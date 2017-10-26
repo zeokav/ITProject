@@ -14,7 +14,7 @@ public partial class newsale : System.Web.UI.Page
     
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)d
+        if (!IsPostBack)
         {
             List<String> list = new List<String>();
             SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
