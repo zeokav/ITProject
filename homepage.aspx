@@ -1,8 +1,11 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="homepage.aspx.cs" Inherits="homepage" MasterPageFile="~/MasterPage.master" %>
 
 <asp:Content ContentPlaceHolderID="HomePage" runat="server">
-    <h1>Summary</h1>
     <asp:Label ID="errmsg" runat="server"></asp:Label>
+    <h1>Revenue for the day</h1>
+         <asp:Label ID="rev" runat="server"></asp:Label>
+     
+    <h1>Summary</h1>
     <div class="row">
         <div class="col-md-4">
             <h3>Medicines Required</h3>
@@ -42,7 +45,16 @@
             </asp:GridView>
         </div>
         <div class="col-md-4">
-            <h3>The other thing</h3>
+            <h3>Vendor-wise Expired Medicines</h3>
+            <asp:Button Text="Show/Hide" OnClick="Show_Vend" runat="server"/><br /><br />
+            <asp:GridView ID="vend_gv" runat="server" AllowSorting="true" Visible="false" AutoGenerateColumns="false">
+                <RowStyle BackColor="#ccffff"/>
+                <HeaderStyle Font-Italic="true" Font-Bold="true"/>
+                <Columns>
+                    <asp:BoundField HeaderText="Item Name" DataField="Key"/>
+                    <asp:BoundField HeaderText="Medicine Vendor" DataField="Value" />
+                </Columns>
+            </asp:GridView>
         </div>
     </div>
 </asp:Content>
