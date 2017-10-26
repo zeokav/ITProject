@@ -4,10 +4,6 @@
     <h1>Summary</h1>
     <div class="row">
         <div class="col-md-6">
-            <h2>Revenue For Today</h2>
-            <asp"
-        </div>
-        <div class="col-md-6">
             <h2>Medicines Required</h2>
 
         </div>
