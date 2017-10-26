@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="addmedicine.aspx.cs" Inherits="addmedicine"  MasterPageFile="~/MasterPage.master"%>
-
-<asp:Content ContentPlaceHolderID="HomePage" runat="server">
-    This is it Add med
-=======
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="addmedicine.aspx.cs" Inherits="addmedicine"  MasterPageFile="~/MasterPage.master"%>
 
 <asp:Content ContentPlaceHolderID="HomePage" runat="server">
@@ -60,5 +54,4 @@
         <asp:Button runat="server" OnClick="Add_Medicine" Text="Add Medicine" CssClass="btn btn-md btn-default"/>
         <asp:Label runat="server" ID="Result"></asp:Label>
     </div>
->>>>>>> 63f376aaa495adf19fd68e240ba22d69de9b6694
 </asp:Content>

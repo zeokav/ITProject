@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-
-public partial class addmedicine : System.Web.UI.Page
-{
-    protected void Page_Load(object sender, EventArgs e)
-    {
-
-    }
-=======
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,5 +28,4 @@ public partial class addmedicine : System.Web.UI.Page
             Result.Text = "Could not enter: <br />" + exc.ToString();
         }
     }
->>>>>>> 63f376aaa495adf19fd68e240ba22d69de9b6694
 }
