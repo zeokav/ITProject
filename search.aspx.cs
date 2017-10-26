@@ -45,7 +45,7 @@ public partial class search : System.Web.UI.Page
                 else
                 {
                     SqlCommand command = new SqlCommand("Select * from MedicineMaster INNER JOIN Inventory ON Inventory.Med_ID = MedicineMaster.Med_ID  where MedicineMaster.Trade_Name=@gen", con);
-                    command.Parameters.AddWithValue("@gen", tradenametextbox.Text);
+                    command.Parameters.AddWithValue("@gen", tradenametextbox.Text.ToString());
                     SqlDataReader reader = command.ExecuteReader();
                     findmed.DataSource = reader;
                     DataBind();

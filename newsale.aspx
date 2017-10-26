@@ -15,4 +15,7 @@
     <br />
     <br />
     <asp:Button id="addrow" Text ="add New Item" runat="server" OnClick="addrow_Click"/>
+    <br />
+    <br />
+    <asp:Button ID="sub" Text="Submit Order" runat="server" OnClick="sub_Click" />
 </asp:Content>
