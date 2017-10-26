@@ -2,5 +2,5 @@
 
 
 <asp:Content ContentPlaceHolderID="HomePage" runat="server">
-    This is it Add med
+    This is search page
 </asp:Content>

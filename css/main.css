@@ -20,27 +20,7 @@ h5,
 h6 {
   font-weight: 600; 
   font-family: 'Open Sans', sans-serif;
-  color:#4e4e4e;
-}
-
-h1{
-  font-size: 36px;
-  color:#fff;
-}
-
-h2{
-  font-size: 20px;
-}
-
-h3{
-  font-size: 16px;
-  color: #787878;
-  font-weight: 400;
-  line-height: 24px;
-}
-
-h4{
-  font-size: 16px;
+  color:black;
 }
 
 a {
@@ -268,6 +248,7 @@ input.search-form:hover {
 
 .navbar-brand {
   padding: 0;
+  padding-left: 30px;
   margin:0;
 }
 
@@ -555,6 +536,14 @@ input.search-form:hover {
   -o-animation: fadeInUp 300ms linear 1200ms both;
   -ms-animation: fadeInUp 300ms linear 1200ms both;
   animation: fadeInUp 300ms linear 1200ms both;
+}
+
+.content {
+    padding: 50px 100px 0 100px;
+}
+
+.form-holder {
+    padding-top: 50px;
 }
 
 #feature
