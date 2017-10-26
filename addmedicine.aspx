@@ -15,6 +15,7 @@
             <div class="col-sm-5">
                 <asp:TextBox runat="server" ID="TName" CssClass="form-control" placeholder="Trade Name"></asp:TextBox>
             </div>
+            <asp:RequiredFieldValidator runat="server" ControlToValidate="TName"></asp:RequiredFieldValidator>
         </div>
         <div class="form-group">
             <div class="control-label col-sm-2">
@@ -23,6 +24,7 @@
             <div class="col-sm-5">
                 <asp:TextBox runat="server" ID="GName" CssClass="form-control" placeholder="Generic Name"></asp:TextBox>
             </div>
+            <asp:RequiredFieldValidator runat="server" ControlToValidate="GName"></asp:RequiredFieldValidator>
         </div>
         <div class="form-group">
             <div class="control-label col-sm-2">
@@ -31,6 +33,7 @@
             <div class="col-sm-5">
                 <asp:TextBox runat="server" ID="Manufacturer" CssClass="form-control" placeholder="Manufacturer"></asp:TextBox>
             </div>
+            <asp:RequiredFieldValidator runat="server" ControlToValidate="Manufacturer"></asp:RequiredFieldValidator>
         </div>
         <div class="form-group">
             <div class="control-label col-sm-2">
@@ -49,6 +52,7 @@
             <div class="col-sm-5">
                 <asp:TextBox runat="server" ID="Cost" CssClass="form-control" placeholder="Medicine Cost"></asp:TextBox>
             </div>
+            <asp:RequiredFieldValidator runat="server" ControlToValidate="Cost"></asp:RequiredFieldValidator>
             <asp:RegularExpressionValidator ValidationExpression="[0-9]+([.][0-9]+)?" ControlToValidate="Cost" runat="server" ErrorMessage="Invalid cost format!"></asp:RegularExpressionValidator>
         </div>
         <asp:Button runat="server" OnClick="Add_Medicine" Text="Add Medicine" CssClass="btn btn-md btn-default col-sm-offset-2"/>
