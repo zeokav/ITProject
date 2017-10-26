@@ -36,7 +36,7 @@ public partial class addmedicine : System.Web.UI.Page
                 conn.Close();
             }
         }
-        
+
     }
 
     protected void Add_Medicine(object sender, EventArgs e)

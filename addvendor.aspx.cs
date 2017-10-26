@@ -36,7 +36,7 @@ public partial class addvendor : System.Web.UI.Page
         }
         finally
         {
-            if(!iserr)
+            if (!iserr)
             {
                 Response.Redirect(Request.RawUrl);
             }

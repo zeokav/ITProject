@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data.Sql;
 using System.Data;
+using System.Web.Configuration;
 
 public partial class search : System.Web.UI.Page
 {
@@ -21,10 +22,15 @@ public partial class search : System.Web.UI.Page
         {
             errorText.Text = "Enter a Name";
         }
+        else if (genericnametextbox.Text != "" && tradenametextbox.Text != "")
+        {
+            errorText.Text = "Only Need To enter anyone value";
+        }
         else
         {
-            SqlConnection con = new SqlConnection();
-            con.ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Project;Integrated Security=True;Pooling=False";
+            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
+
+
             try
             {
                 con.Open();
@@ -35,11 +41,11 @@ public partial class search : System.Web.UI.Page
                     SqlDataReader reader = command.ExecuteReader();
                     findmed.DataSource = reader;
                     DataBind();
-                    if(!reader.Read())
+                    if (!reader.Read())
                     {
                         errorText.Text = "No Records Found";
                     }
- 
+
                 }
                 else
                 {
@@ -56,7 +62,7 @@ public partial class search : System.Web.UI.Page
 
                 }
             }
-            catch(Exception exp)
+            catch (Exception exp)
             {
                 errorText.Text = exp.Message;
             }
@@ -64,7 +70,7 @@ public partial class search : System.Web.UI.Page
             {
                 con.Close();
             }
-           
+
         }
     }
 }

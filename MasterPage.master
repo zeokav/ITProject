@@ -46,8 +46,10 @@
         </nav>
 
     <div class="content">
-        <asp:ContentPlaceHolder ID="HomePage" runat="server">
-        </asp:ContentPlaceHolder>
+        <form id="masterform" runat="server">
+            <asp:ContentPlaceHolder ID="HomePage" runat="server">
+            </asp:ContentPlaceHolder>
+        </form>
     </div>
 
 
@@ -69,7 +71,7 @@
                 return false;
             })
         });
-        </script>
+    </script>
 
     <script src="js/jquery.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>

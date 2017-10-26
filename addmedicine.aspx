@@ -1,8 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="addmedicine.aspx.cs" Inherits="addmedicine"  MasterPageFile="~/MasterPage.master"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="addmedicine.aspx.cs" Inherits="addmedicine" MasterPageFile="~/MasterPage.master" %>
 
 <asp:Content ContentPlaceHolderID="HomePage" runat="server">
-    <h1>
-        New Medicine Record
+    <h1>New Medicine Record
     </h1>
     <h3 class="text-muted" style="font-style: italic">Enter new medicine information here</h3>
 
@@ -55,8 +54,8 @@
             <asp:RequiredFieldValidator runat="server" ControlToValidate="Cost"></asp:RequiredFieldValidator>
             <asp:RegularExpressionValidator ValidationExpression="[0-9]+([.][0-9]+)?" ControlToValidate="Cost" runat="server" ErrorMessage="Invalid cost format!"></asp:RegularExpressionValidator>
         </div>
-        <asp:Button runat="server" OnClick="Add_Medicine" Text="Add Medicine" CssClass="btn btn-md btn-default col-sm-offset-2"/>
-        <asp:Button runat="server" OnClick="Reset_Form" Text="Reset Form" CssClass="btn btn-md btn-warning"/>
+        <asp:Button runat="server" OnClick="Add_Medicine" Text="Add Medicine" CssClass="btn btn-md btn-default col-sm-offset-2" />
+        <asp:Button runat="server" OnClick="Reset_Form" Text="Reset Form" CssClass="btn btn-md btn-warning" />
         <asp:Label runat="server" ID="Result"></asp:Label>
     </div>
 </asp:Content>
