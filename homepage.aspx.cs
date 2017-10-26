@@ -61,8 +61,8 @@ public partial class homepage : System.Web.UI.Page
         try
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("Select * from BatchInfo WHERE Expiry_Date < @tod", con);
-            cmd.Parameters.AddWithValue("@tod", DateTime.Now);
+            SqlCommand cmd = new SqlCommand("Select * from BatchInfo INNER JOIN MedicineMaster ON BatchInfo.Med_ID=MedicineMaster.Med_ID WHERE BatchInfo.Expiry_Date < @tod", con);
+            cmd.Parameters.AddWithValue("@tod", DateTime.Today);
             SqlDataReader reader = cmd.ExecuteReader();
 
             exp_gv.DataSource = reader;

@@ -31,11 +31,13 @@
             <h3>Expired Medicines</h3>
             <asp:Label ID="ExpStatus" runat="server" CssClass="text-muted"></asp:Label><br /><br />
             <asp:Button Text="Show/Hide" OnClick="Show_Exp" runat="server"/><br /><br />
-            <asp:GridView ID="exp_gv" runat="server" AllowSorting="true" Visible="false" AutoGenerateColumns="false">
+            <asp:GridView ID="exp_gv" runat="server" AllowSorting="true" Visible="false" AutoGenerateColumns="false" DataKeyNames="Batch_ID">
                 <RowStyle BackColor="#ccffff"/>
                 <HeaderStyle Font-Italic="true" Font-Bold="true"/>
                 <Columns>
-
+                    <asp:BoundField DataField="Batch_ID" HeaderText="Batch No." />
+                    <asp:BoundField DataField="Trade_Name" HeaderText="Medicine" />
+                    <asp:BoundField DataField="Expiry_Date" HeaderText="Expired" />
                 </Columns>
             </asp:GridView>
         </div>
