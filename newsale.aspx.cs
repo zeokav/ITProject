@@ -89,15 +89,15 @@ public partial class newsale : System.Web.UI.Page
         int t = 0;
         SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
         con.Open();
-        SqlCommand cmd = new SqlCommand("INSERT INTO MedicineMaster VALUES(@SaleId, @PurDate)", con);
+        SqlCommand cmd = new SqlCommand("INSERT INTO Sales VALUES(@SaleId, @PurDate)", con);
         String mon = RandomDigits(9);
         cmd.Parameters.AddWithValue("@SaleId", mon);
         cmd.Parameters.AddWithValue("@PurDate", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
         cmd.ExecuteNonQuery();
         foreach (TableRow row in medsale.Rows)
         {
-            if (t == 0) { continue; }
-            cmd = new SqlCommand("INSERT INTO MedicineMaster VALUES(@SaleId, @Med_ID,@Quantity)", con);
+            if (t == 0) { t++; continue; }
+            cmd = new SqlCommand("INSERT INTO SalesInfo VALUES(@SaleId, @Med_ID,@Quantity)", con);
             cmd.Parameters.AddWithValue("@SaleId", mon);
             TextBox b0 = (TextBox)(row.Controls[0]).Controls[0];
             TextBox b1 = (TextBox)(row.Controls[1]).Controls[0];
