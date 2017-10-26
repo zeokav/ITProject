@@ -3,7 +3,6 @@
 
 <asp:Content ContentPlaceHolderID="HomePage" runat="server">
     <div class="search">
-        <form id="searchform" runat="server">
             <asp:Label ID="genericnamelabel" runat="server" Width="100px">Generic Name: </asp:Label>
             <asp:TextBox ID="genericnametextbox" runat="server"></asp:TextBox>
             <br />
@@ -19,6 +18,5 @@
             <br />
             <br />
             <asp:GridView ID="findmed" runat="server" AutoGenerateColumns="true"></asp:GridView>
-        </form>
     </div>
 </asp:Content>

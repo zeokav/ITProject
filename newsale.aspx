@@ -2,5 +2,5 @@
 
 
 <asp:Content ContentPlaceHolderID="HomePage" runat="server">
-    This is new sales
+    <asp:Label> </asp:Label>
 </asp:Content>
