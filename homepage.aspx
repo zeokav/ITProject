@@ -3,12 +3,15 @@
 <asp:Content ContentPlaceHolderID="HomePage" runat="server">
     <h1>Summary</h1>
     <div class="row">
-        <div class="col-md-6">
-            <h2>Medicines Required</h2>
+        <div class="col-md-4">
+            <h3>Medicines Required</h3>
 
         </div>
-        <div class="col-md-6">
-            <h2>Expired Medicines</h2>
+        <div class="col-md-4">
+            <h3>Expired Medicines</h3>
+        </div>
+        <div class="col-md-4">
+            <h3>The other thing</h3>
         </div>
     </div>
 </asp:Content>

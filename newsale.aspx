@@ -1,6 +1,21 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="newsale.aspx.cs" Inherits="newsale" MasterPageFile="~/MasterPage.master" %>
 
-
 <asp:Content ContentPlaceHolderID="HomePage" runat="server">
-    <asp:Label> </asp:Label>
+
+    <asp:Table ID="medsale" runat="server"  Width="500px" CellPadding="3" BorderStyle="Solid" BorderColor="Black">
+        <asp:TableRow>
+            <asp:TableCell>
+                Medicine ID
+            </asp:TableCell>
+            <asp:TableCell>
+                Quantity
+            </asp:TableCell>
+        </asp:TableRow>
+    </asp:Table>
+    <br />
+    <br />
+    <asp:Button id="addrow" Text ="add New Item" runat="server" OnClick="addrow_Click"/>
+    <br />
+    <br />
+    <asp:Button ID="sub" Text="Submit Order" runat="server" OnClick="sub_Click" />
 </asp:Content>
