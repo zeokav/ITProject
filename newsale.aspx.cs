@@ -11,20 +11,23 @@ using System.Web.Configuration;
 
 public partial class newsale : System.Web.UI.Page
 {
-    List<String> list = new List<String>();
+    
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (!IsPostBack)d
         {
+            List<String> list = new List<String>();
             SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
             con.Open();
             SqlCommand cmd = new SqlCommand("SELECT Med_ID from MedicineMaster", con);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
+
                 list.Add(reader["Med_ID"].ToString());
             }
             Session["rowcount"] = 0;
+            Session["list"] = list;
             con.Close();
         }
         else
@@ -35,11 +38,12 @@ public partial class newsale : System.Web.UI.Page
             for (int i = 0; i < rowcount; i++)
             {
                 TextBox tb = new TextBox();
-                if (Session["medid" + i.ToString() + "0"] != null) { tb.Text = Session["medid" + i.ToString() + "0"].ToString(); }
+                if (Session["medid" + i.ToString() + "1"] != null) { tb.Text = Session["medid" + i.ToString() + "0"].ToString(); }
                 DropDownList tbquantity = new DropDownList();
+                List<String> list = (List<String>)Session["list"];
                 tbquantity.DataSource = list;
                 DataBind();
-                if (Session["medid" + i.ToString() + "1"] != null)
+                if (Session["medid" + i.ToString() + "0"] != null)
                 {
                     int index;
                     int.TryParse(Session["medid" + i.ToString() + "1"].ToString(), out index);
@@ -68,17 +72,18 @@ public partial class newsale : System.Web.UI.Page
             {
                 if (temp == count)
                 {
-                    int temp2 = 0;
-                    Session["medid" + temp.ToString() + temp2.ToString()] = ((DropDownList)ro.Controls[0].Controls[0]).SelectedIndex;
-                    temp2++;
-                    Session["medid" + temp.ToString() + temp2.ToString()] = ((TextBox)ro.Controls[0].Controls[0]).Text;
+                    
+                    Session["medid" + temp.ToString() + "0"] = ((DropDownList)ro.Controls[0].Controls[0]).SelectedIndex;
+                    Session["medid" + temp.ToString() + "1"] = ((TextBox)ro.Controls[0].Controls[0]).Text;
                 }
                 temp++;
             }
 
         }
-        TextBox tb = new TextBox();
-        DropDownList tbquantity = new DropDownList();
+        DropDownList tb = new DropDownList();
+        tb.DataSource = (List<String>)Session["list"];
+        DataBind();
+        TextBox tbquantity = new TextBox();
         TableRow row = new TableRow();
         TableCell c1 = new TableCell();
         TableCell c2 = new TableCell();
@@ -114,10 +119,10 @@ public partial class newsale : System.Web.UI.Page
             if (t == 0) { continue; }
             cmd = new SqlCommand("INSERT INTO MedicineMaster VALUES(@SaleId, @Med_ID,@Quantity)", con);
             cmd.Parameters.AddWithValue("@SaleId", mon);
-            TextBox b0 = (TextBox)(row.Controls[0]).Controls[0];
-            DropDownList b1 = (DropDownList)(row.Controls[1]).Controls[0];
-            cmd.Parameters.AddWithValue("@Med_ID", b0.Text);
-            cmd.Parameters.AddWithValue("@Quantity", b1.SelectedValue);
+            DropDownList b0 = (DropDownList)(row.Controls[0]).Controls[0];
+            TextBox b1 = (TextBox)(row.Controls[1]).Controls[0];
+            cmd.Parameters.AddWithValue("@Med_ID", b0.SelectedValue);
+            cmd.Parameters.AddWithValue("@Quantity", b1.Text);
             cmd.ExecuteNonQuery();
         }
     }
