@@ -94,16 +94,54 @@ public partial class newsale : System.Web.UI.Page
         cmd.Parameters.AddWithValue("@SaleId", mon);
         cmd.Parameters.AddWithValue("@PurDate", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
         cmd.ExecuteNonQuery();
+        float ordercost = 0;
+        con.Close();
         foreach (TableRow row in medsale.Rows)
         {
+            SqlConnection con2 = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
+            con2.Open();
             if (t == 0) { t++; continue; }
-            cmd = new SqlCommand("INSERT INTO SalesInfo VALUES(@SaleId, @Med_ID,@Quantity)", con);
-            cmd.Parameters.AddWithValue("@SaleId", mon);
             TextBox b0 = (TextBox)(row.Controls[0]).Controls[0];
             TextBox b1 = (TextBox)(row.Controls[1]).Controls[0];
-            cmd.Parameters.AddWithValue("@Med_ID", b0.Text);
-            cmd.Parameters.AddWithValue("@Quantity", b1.Text);
-            cmd.ExecuteNonQuery();
+            SqlCommand cmd3 = new SqlCommand("Select Med_Remaining from Inventory where Med_ID = @med",con2);
+            cmd3.Parameters.AddWithValue("@med", b0.Text);
+            SqlDataReader rea = cmd3.ExecuteReader();
+            int curr = -1;
+            while (rea.Read())
+            {
+                int.TryParse(rea["Med_Remaining"].ToString(), out curr);
+            }
+            rea.Close();
+            int quan;
+            int.TryParse(b1.Text, out quan);
+            if (curr < quan)
+            {
+                errorTex.Text += "Cannot Order For Medicine ID" + b0.Text + " ";
+            }
+            else
+            {
+                SqlCommand cmd2 = new SqlCommand("INSERT INTO SalesInfo VALUES(@SaleId, @Med_ID,@Quantity)", con2);
+                cmd2.Parameters.AddWithValue("@SaleId", mon);
+                cmd2.Parameters.AddWithValue("@Med_ID", b0.Text);
+                cmd2.Parameters.AddWithValue("@Quantity", b1.Text);
+                cmd2.ExecuteNonQuery();
+                SqlCommand cmd5 = new SqlCommand("UPDATE Inventory SET Med_Remaining = @rem WHERE Med_ID= @id ", con2);
+                cmd5.Parameters.AddWithValue("@rem",curr-quan);
+                cmd5.Parameters.AddWithValue("@id", b0.Text);
+                cmd5.ExecuteNonQuery();
+                SqlCommand cm4 = new SqlCommand("Select Med_Price from MedicineMaster WHERE Med_ID = @id", con2);
+                cm4.Parameters.AddWithValue("@id", b0.Text);
+                SqlDataReader re = cm4.ExecuteReader();
+                re.Read();
+                float price;
+                float.TryParse(re["Med_Price"].ToString(), out price);
+                ordercost += price*quan;
+                re.Close();
+            }
+            con2.Close();
         }
+        pricelab.Text = "Order Cost = " + ordercost.ToString();
+        Session.Clear();
+
     }
 }
