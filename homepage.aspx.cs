@@ -80,6 +80,7 @@ public partial class homepage : System.Web.UI.Page
             {
                 s_ids.Add(reader["Sales_ID"].ToString());
             }
+	    Response.Write("<script>alert('Reader closed')</script>");
             reader.Close();
             Dictionary<string, int> sales = new Dictionary<string, int>();
 
