@@ -116,7 +116,7 @@ public partial class newsale : System.Web.UI.Page
             int.TryParse(b1.Text, out quan);
             if (curr < quan)
             {
-                errorTex.Text += "Cannot Order For Medicine ID" + b0.Text + " ";
+                errorTex.Text += "Cannot Order For Medicine ID - " + b0.Text + " ";
             }
             else
             {
