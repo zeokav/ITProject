@@ -388,10 +388,11 @@ public partial class homepage : System.Web.UI.Page
             }
 
             Session["list"] = list;
-
-
             Session["name"] = genericnametextbox.Text.ToString();
             Session["tra_name"] = tradenametextbox.Text.ToString();
+            HistoryGrid.DataSource = list;
+            HistoryGrid.DataBind();
+            HistoryGrid.Width = Unit.Pixel(150);
             try
             {
                 con.Open();
@@ -401,6 +402,14 @@ public partial class homepage : System.Web.UI.Page
                     command.Parameters.AddWithValue("@gen", Session["name"]);
                     SqlDataReader reader = command.ExecuteReader();
                     findmed.DataSource = reader;
+                    if (reader.HasRows)
+                    {
+                        resLabel.Visible = true;
+                    }
+                    else
+                    {
+                        resLabel.Visible = false;
+                    }
                     DataBind();
                 }
                 else
@@ -409,8 +418,17 @@ public partial class homepage : System.Web.UI.Page
                     command.Parameters.AddWithValue("@gen", Session["tra_name"]);
                     SqlDataReader reader = command.ExecuteReader();
                     findmed.DataSource = reader;
+                    if (reader.HasRows)
+                    {
+                        resLabel.Visible = true;
+                    }
+                    else
+                    {
+                        resLabel.Visible = false;
+                    }
                     DataBind();
                 }
+                
             }
             catch (Exception exp)
             {
@@ -428,7 +446,7 @@ public partial class homepage : System.Web.UI.Page
     protected void history(object sender, EventArgs e)
     {
         HttpCookie cookie = Request.Cookies["history"];
-        historyLabel.Text = "";
+        //historyLabel.Text = "";
 
         if (cookie == null)
         {
@@ -436,17 +454,13 @@ public partial class homepage : System.Web.UI.Page
         }
         else
         {
+            historyLabel.Text = "Found history: <br />";
             string value = cookie["history"];
             List<string> result = value.Split(' ').ToList();
-            int count = 0;
             result.Reverse();
-            foreach (string val in result)
-            {
-                historyLabel.Text += val + " ";
-                count++;
-                if (count == 3)
-                    break;
-            }
+            HistoryGrid.DataSource = result;
+            HistoryGrid.Width = Unit.Pixel(150);
+            HistoryGrid.DataBind();
         }
     }
 
