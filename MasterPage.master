@@ -41,6 +41,7 @@
                         <li><a href="addvendor.aspx">Add Vendor</a></li>
                         <li><a href="graphs.aspx">Graph</a></li>
                         <li><a href="batch.aspx">New Batch</a></li>
+                        <li><a href="inventory.aspx">Inventory</a></li>
                     </ul>
                 </div>
             </div>

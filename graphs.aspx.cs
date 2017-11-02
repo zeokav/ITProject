@@ -18,10 +18,10 @@ public partial class graphs : System.Web.UI.Page
         {
             SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
             con.Open();
-            SqlCommand command = new SqlCommand("Select Med_ID from MedicineMaster", con);
+            SqlCommand command = new SqlCommand("Select Med_ID, Trade_Name from MedicineMaster", con);
             SqlDataReader reader = command.ExecuteReader();
             medchart.DataSource = reader;
-            medchart.DataTextField = "Med_ID";
+            medchart.DataTextField = "Trade_Name";
             medchart.DataValueField = "Med_ID";
             medchart.DataBind();
             medchart.Items.Insert(0, new ListItem("Select", "Select"));
@@ -36,6 +36,7 @@ public partial class graphs : System.Web.UI.Page
         //con.Open();
         //SqlCommand command = new SqlCommand("Select Sales.Purchase_Date, SUM() from MedicineMaster", con);
         //SqlDataReader reader = command.ExecuteReader();
+        msg.Text = "Showing graph for: " + medchart.SelectedItem.Text + " <br />";
         if (medchart.SelectedValue != "Month" && medchart.SelectedValue != "Select")
         {
             SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
