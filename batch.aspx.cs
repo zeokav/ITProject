@@ -11,9 +11,10 @@ using System.Data;
 
 public partial class _Default : System.Web.UI.Page
 {
-    DataSet ds = new DataSet();
+    
     protected void Page_Load(object sender, EventArgs e)
     {
+        DataSet ds = new DataSet();
         if(!IsPostBack)
         {
             SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
