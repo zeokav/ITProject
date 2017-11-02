@@ -53,7 +53,14 @@ public partial class _Default : System.Web.UI.Page
 
             cmd = new SqlCommand("UPDATE Inventory SET Med_Remaining=Med_Remaining+40 WHERE Med_ID=@med", con);
             cmd.Parameters.AddWithValue("@med", ddl.SelectedValue);
-            cmd.ExecuteNonQuery();
+            int rows = cmd.ExecuteNonQuery();
+
+            if (rows == 0)
+            {
+                cmd = new SqlCommand("INSERT INTO Inventory VALUES (@med, 40, 15)", con);
+                cmd.Parameters.AddWithValue("@med", ddl.SelectedValue);
+                cmd.ExecuteNonQuery();
+            }
         }
         catch (Exception exc)
         {

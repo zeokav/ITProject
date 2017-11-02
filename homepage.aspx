@@ -26,7 +26,13 @@
                                 CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"/>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:Button Text="Place Order"
+                                CommandName="PlaceOrder" runat="server" 
+                                CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
         </div>
