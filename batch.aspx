@@ -39,6 +39,6 @@
             <asp:Button Text="Reset" OnClick="Reset_Form" runat="server" CssClass="btn btn-md btn-warning"/>
         </div>
         
-    </div>
+    </div>      
 </asp:Content>
 
