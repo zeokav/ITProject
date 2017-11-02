@@ -36,7 +36,6 @@
                     <ul class="nav navbar-nav">
                         <li><a href="homepage.aspx">Home</a></li>
                         <li><a href="newsale.aspx">Sale</a></li>
-                        <li><a href="search.aspx">Search</a></li>
                         <li><a href="addmedicine.aspx">Add Medicine</a></li>
                         <li><a href="addvendor.aspx">Add Vendor</a></li>
                         <li><a href="graphs.aspx">Graph</a></li>
