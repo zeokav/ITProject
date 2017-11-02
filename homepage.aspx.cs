@@ -10,6 +10,7 @@ using System.Web.Configuration;
 
 public partial class homepage : System.Web.UI.Page
 {
+    List<string> list = new List<string>();
     protected void Page_Load(object sender, EventArgs e)
     {
         if(!IsPostBack)
@@ -229,5 +230,112 @@ public partial class homepage : System.Web.UI.Page
         }
     }
 
-    
+
+
+
+
+    protected void submitbut_Click(object sender, EventArgs e)
+    {
+        if (genericnametextbox.Text == "" && tradenametextbox.Text == "")
+        {
+            errorText.Text = "Enter a Name";
+        }
+        else if (genericnametextbox.Text != "" && tradenametextbox.Text != "")
+        {
+            errorText.Text = "Only Need To enter anyone value";
+        }
+        else
+        {
+            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
+            list = (List<string>)Session["list"];
+
+            HttpCookie cookie = Request.Cookies["history"];
+            if(cookie == null)
+            {
+                HttpCookie cookie1 = new HttpCookie("history");
+                cookie1["history"] = genericnametextbox.Text.ToString();
+                //cookie1["history"] = tradenametextbox.Text.ToString();
+                list.Add(genericnametextbox.Text.ToString());
+                //cookie["history"] = list;
+                //cookie1.Values["history1"] = genericnametextbox.Text.ToString();
+                Response.Cookies.Add(cookie1);
+                cookie1.Expires = DateTime.Now.AddYears(1);
+            }
+            else
+            {
+                //cookie = Request.Cookies["history"];
+                cookie["history"] = genericnametextbox.Text.ToString();
+                //cookie["history"] = tradenametextbox.Text.ToString();
+                list.Add(genericnametextbox.Text.ToString());
+                //cookie.Values["history1"] = genericnametextbox.Text.ToString();
+                //cookie.Values["history"] = genericnametextbox.Text.ToString();
+                cookie.Expires = DateTime.Now.AddYears(1);
+                Response.Cookies.Add(cookie);
+            }
+
+            Session["list"] = list;
+
+
+            Session["name"] = genericnametextbox.Text.ToString();
+            Session["tra_name"] = tradenametextbox.Text.ToString();
+            try
+            {
+                con.Open();
+                if (genericnametextbox.Text != "")
+                {
+                    SqlCommand command = new SqlCommand("Select * from MedicineMaster INNER JOIN Inventory ON Inventory.Med_ID = MedicineMaster.Med_ID  where MedicineMaster.Gen_Name=@gen", con);
+                    command.Parameters.AddWithValue("@gen", Session["name"]);
+                    SqlDataReader reader = command.ExecuteReader();
+                    findmed.DataSource = reader;
+                    DataBind();
+                }
+                else
+                {
+                    SqlCommand command = new SqlCommand("Select * from MedicineMaster INNER JOIN Inventory ON Inventory.Med_ID = MedicineMaster.Med_ID  where MedicineMaster.Trade_Name=@gen", con);
+                    command.Parameters.AddWithValue("@gen", Session["tra_name"]);
+                    SqlDataReader reader = command.ExecuteReader();
+                    findmed.DataSource = reader;
+                    DataBind();
+                }
+            }
+            catch (Exception exp)
+            {
+                errorText.Text = exp.Message;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
+    }
+
+
+    protected void history(object sender, EventArgs e)
+    {
+        HttpCookie cookie = Request.Cookies["history"];
+
+        if(cookie == null)
+        {
+            historyLabel.Text = "No history to show!";
+        }
+        else
+        {
+            //string value = Request.Cookies["history"].Values["history1"];
+            string value = cookie["history"];
+            //historyLabel.Text = "plis " + cookie["history"];
+            //historyLabel.Text = value;
+            foreach (string val in list)
+            {
+                historyLabel.Text = value;
+            }
+            //for (int i = 0; i < 5; i++)
+            //{
+            //historyLabel.Text = cookie["history"];
+            //Response.Write("<script>alert(cookie['history'])</script>");
+            //}
+        }
+    }
+
+
 }
