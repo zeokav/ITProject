@@ -446,7 +446,6 @@ public partial class homepage : System.Web.UI.Page
     protected void history(object sender, EventArgs e)
     {
         HttpCookie cookie = Request.Cookies["history"];
-        //historyLabel.Text = "";
 
         if (cookie == null)
         {
@@ -464,5 +463,23 @@ public partial class homepage : System.Web.UI.Page
         }
     }
 
+    protected void hg_cmd(object sender, GridViewCommandEventArgs e)
+    {
+        if(e.CommandName == "AddToSearch")
+        {
+            HttpCookie cookie = Request.Cookies["history"];
+            if (cookie == null)
+            {
+                historyLabel.Text = "Can't find cookie";
+                return;
+            }
+            string value = cookie["history"];
+            List<string> result = value.Split(' ').ToList();
 
+            int row;
+            Int32.TryParse(e.CommandArgument.ToString(), out row);
+            genericnametextbox.Text = result[row];
+            
+        }
+    }
 }

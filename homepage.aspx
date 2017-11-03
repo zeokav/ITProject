@@ -165,8 +165,21 @@
                 <br />
                 <asp:Label ID="errorText" runat="server"></asp:Label>
                 <asp:Label runat="server" ID="historyLabel" Text=""></asp:Label>
-                <asp:GridView runat="server" ID="HistoryGrid">
-
+                <asp:GridView runat="server" ID="HistoryGrid" AutoGenerateColumns="false" OnRowCommand="hg_cmd">
+                    <Columns>
+                        <asp:TemplateField HeaderText="Item">
+                            <ItemTemplate>
+                                <%#Container.DataItem %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:Button Text="Select"
+                                    CommandName="AddToSearch" runat="server" 
+                                    CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"/>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
                 </asp:GridView>
                 <br />
                 <br />
