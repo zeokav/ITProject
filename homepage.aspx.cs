@@ -81,6 +81,11 @@ public partial class homepage : System.Web.UI.Page
         SetVend();
     }
 
+    protected void Refresh_Req(object sender, EventArgs e)
+    {
+        SetReq();
+    }
+
     protected void Reset_Form(object sender, EventArgs e)
     {
         Exp.Text = Buy.Text = null;
@@ -315,10 +320,6 @@ public partial class homepage : System.Web.UI.Page
         }
     }
 
-
-
-
-
     protected void submitbut_Click(object sender, EventArgs e)
     {
         if (genericnametextbox.Text == "" && tradenametextbox.Text == "")
@@ -374,6 +375,7 @@ public partial class homepage : System.Web.UI.Page
             Session["list"] = list;
             Session["name"] = genericnametextbox.Text.ToString();
             Session["tra_name"] = tradenametextbox.Text.ToString();
+            list.Reverse();
             HistoryGrid.DataSource = list;
             HistoryGrid.DataBind();
             HistoryGrid.Width = Unit.Pixel(150);
