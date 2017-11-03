@@ -23,31 +23,6 @@ public partial class homepage : System.Web.UI.Page
             SetExp();
             SetVend();
             SetRevenue();
-            SetBatch();
-        }
-    }
-
-    protected void SetBatch()
-    {
-        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["medDb"].ConnectionString);
-        try
-        {
-            con.Open();
-            SqlCommand cmd = new SqlCommand("Select Med_ID, Trade_Name from MedicineMaster", con);
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            adapter.Fill(ds, "med");
-            ddl.DataSource = ds.Tables["med"];
-            ddl.DataTextField = "Trade_Name";
-            ddl.DataValueField = "Med_ID";
-            ddl.DataBind();
-        }
-        catch (Exception exc)
-        {
-            batcherr.Text = exc.ToString();
-        }
-        finally
-        {
-            con.Close();
         }
     }
 
@@ -101,6 +76,11 @@ public partial class homepage : System.Web.UI.Page
         }
     }
 
+    protected void Refresh_Vend(object sender, EventArgs e)
+    {
+        SetVend();
+    }
+
     protected void Reset_Form(object sender, EventArgs e)
     {
         Exp.Text = Buy.Text = null;
@@ -116,6 +96,11 @@ public partial class homepage : System.Web.UI.Page
         rbl.Visible = !rbl.Visible;
         Qty.Visible = !Qty.Visible;
         QtyLabel.Visible = !QtyLabel.Visible;
+    }
+
+    protected void Refresh_Exp(object sender, EventArgs e)
+    {
+        SetExp();
     }
 
     protected void SetVend()
@@ -327,7 +312,6 @@ public partial class homepage : System.Web.UI.Page
             Int32.TryParse(e.CommandArgument.ToString(), out row);
             string med_id = req_gv.DataKeys[row].Value.ToString();
             ddl.SelectedValue = med_id;
-            ddl.Enabled = false;
         }
     }
 
@@ -475,6 +459,7 @@ public partial class homepage : System.Web.UI.Page
             }
             string value = cookie["history"];
             List<string> result = value.Split(' ').ToList();
+            result.Reverse();
 
             int row;
             Int32.TryParse(e.CommandArgument.ToString(), out row);
